@@ -33,8 +33,13 @@ class MyUser(AbstractUser):
 
     @property
     def rating(self):
-        rating_comment = self.comments.comment_rating
-        rating_post = self.posts.post_rating
+        rating_comment = 0
+        for comment in self.comments.all():
+            rating_comment += comment.comment_rating
+        rating_post = 0
+        for comment in self.posts.all():
+            rating_post += comment.post_rating
+
         return rating_comment + rating_post
 
     class Meta:
